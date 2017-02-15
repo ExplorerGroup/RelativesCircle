@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#30609f</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="pp_main_color">#2066f3</color>
+
+    <color name="gray">#999999</color>
+
+    <color name="ripple_color">#a6a6a6</color>
+
+    <color name="line_color">#b1afaf</color>
+    <color name="white">#ffffff</color>
+</resources>
