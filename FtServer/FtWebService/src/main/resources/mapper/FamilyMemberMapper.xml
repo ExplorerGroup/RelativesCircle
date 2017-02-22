@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mn.pp.dao.FamilyMemberDao">
+
+    <!-- ============================= INSERT ============================= -->
+    <insert id="save" useGeneratedKeys="true" keyProperty="uid" >
+        INSERT INTO family_member( uid,userid,gid,showName,headurl,gendar,maritalstatus,
+                         politicalstatus,birthday,profession,father,mother,phoneNumber,spouse,
+                         homeaddress,deeds,createon,isdelete )
+        VALUES ( #{uid},#{userid},#{gid},#{showName},#{headurl},#{gendar},#{maritalstatus},
+                 #{politicalstatus},#{birthday},#{profession},#{father},#{mother},#{phoneNumber},#{spouse},
+                 #{homeaddress},#{deeds},#{createon},#{isdelete})
+    </insert>
+
+
+    <!-- batch insert for mysql -->
+    <insert id="saveBatch">
+        INSERT INTO family_member( uid,userid,gid,showName,headurl,gendar,maritalstatus,
+                          politicalstatus,birthday,profession,father,mother,phoneNumber,spouse,
+                          homeaddress,deeds,createon,isdelete )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.uid},#{item.userid},#{item.gid},#{item.showName},#{item.headurl},#{item.gendar},#{item.maritalstatus},
+              #{item.politicalstatus},#{item.birthday},#{item.profession},#{item.father},#{item.mother},#{item.phoneNumber},#{item.spouse},
+              #{item.homeaddress},#{item.deeds},#{item.createon},#{item.isdelete} )
+        </foreach>
+    </insert>
+
+
+    <!-- batch insert for oracle -->
+    <!--
+    <insert id="saveBatch">
+        INSERT INTO family_member( uid,userid,gid,showName,headurl,gendar,maritalstatus,
+                          politicalstatus,birthday,profession,father,mother,phoneNumber,spouse,
+                          homeaddress,deeds,createon,isdelete )
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT #{item.uid},#{item.userid},#{item.gid},#{item.showName},#{item.headurl},#{item.gendar},#{item.maritalstatus},
+              #{item.politicalstatus},#{item.birthday},#{item.profession},#{item.father},#{item.mother},#{item.phoneNumber},#{item.spouse},
+              #{item.homeaddress},#{item.deeds},#{item.createon},#{item.isdelete} 
+              FROM DUAL 
+        </foreach>
+    </insert>
+
+    -->
+
+    <!-- ============================= UPDATE ============================= -->
+    <update id="update">
+        UPDATE family_member
+        <set>
+            userid=#{userid},
+            gid=#{gid},
+            showName=#{showName},
+            headurl=#{headurl},
+            gendar=#{gendar},
+            maritalstatus=#{maritalstatus},
+            politicalstatus=#{politicalstatus},
+            birthday=#{birthday},
+            profession=#{profession},
+            father=#{father},
+            mother=#{mother},
+            phoneNumber=#{phoneNumber},
+            spouse=#{spouse},
+            homeaddress=#{homeaddress},
+            deeds=#{deeds},
+            createon=#{createon},
+            isdelete=#{isdelete},
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateIgnoreNull">
+        UPDATE family_member
+        <set>
+            <if test="userid!= null">userid=#{userid},</if>
+            <if test="gid!= null">gid=#{gid},</if>
+            <if test="showName!= null">showName=#{showName},</if>
+            <if test="headurl!= null">headurl=#{headurl},</if>
+            <if test="gendar!= null">gendar=#{gendar},</if>
+            <if test="maritalstatus!= null">maritalstatus=#{maritalstatus},</if>
+            <if test="politicalstatus!= null">politicalstatus=#{politicalstatus},</if>
+            <if test="birthday!= null">birthday=#{birthday},</if>
+            <if test="profession!= null">profession=#{profession},</if>
+            <if test="father!= null">father=#{father},</if>
+            <if test="mother!= null">mother=#{mother},</if>
+            <if test="phoneNumber!= null">phoneNumber=#{phoneNumber},</if>
+            <if test="spouse!= null">spouse=#{spouse},</if>
+            <if test="homeaddress!= null">homeaddress=#{homeaddress},</if>
+            <if test="deeds!= null">deeds=#{deeds},</if>
+            <if test="createon!= null">createon=#{createon},</if>
+            <if test="isdelete!= null">isdelete=#{isdelete},</if>
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index"  separator=";">
+            UPDATE family_member
+            <set>
+                userid=#{item.userid},
+                gid=#{item.gid},
+                showName=#{item.showName},
+                headurl=#{item.headurl},
+                gendar=#{item.gendar},
+                maritalstatus=#{item.maritalstatus},
+                politicalstatus=#{item.politicalstatus},
+                birthday=#{item.birthday},
+                profession=#{item.profession},
+                father=#{item.father},
+                mother=#{item.mother},
+                phoneNumber=#{item.phoneNumber},
+                spouse=#{item.spouse},
+                homeaddress=#{item.homeaddress},
+                deeds=#{item.deeds},
+                createon=#{item.createon},
+                isdelete=#{item.isdelete},
+            </set>
+            WHERE uid=#{item.uid} 
+        </foreach>
+    </update>
+
+
+    <!-- ============================= DELETE ============================= -->
+    <delete id="delete">
+        DELETE FROM family_member
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM family_member
+        WHERE
+        <foreach collection="list" item="item" index="index" open="(" separator="OR" close=")">
+            uid=#{item.uid} 
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPK">
+        DELETE FROM family_member
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM family_member
+    </delete>
+
+
+    <!-- ============================= SELECT ============================= -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM family_member
+    </select>
+
+    <select id="findByPK" resultType="com.mn.pp.pojo.FamilyMember">
+        SELECT * FROM family_member
+        WHERE uid=#{uid} 
+    </select>
+
+    <select id="find" resultType="com.mn.pp.pojo.FamilyMember">
+        SELECT uid,userid,gid,showName,headurl,gendar,maritalstatus,politicalstatus
+               ,birthday,profession,father,mother,phoneNumber,spouse,homeaddress
+               ,deeds,createon,isdelete
+         FROM family_member
+        <where>
+            <if test="uid!= null">
+               AND uid = #{uid}
+            </if>
+            <if test="userid!= null">
+               AND userid = #{userid}
+            </if>
+            <if test="gid!= null">
+               AND gid = #{gid}
+            </if>
+            <if test="showName!= null">
+               AND showName = #{showName}
+            </if>
+            <if test="headurl!= null">
+               AND headurl = #{headurl}
+            </if>
+            <if test="gendar!= null">
+               AND gendar = #{gendar}
+            </if>
+            <if test="maritalstatus!= null">
+               AND maritalstatus = #{maritalstatus}
+            </if>
+            <if test="politicalstatus!= null">
+               AND politicalstatus = #{politicalstatus}
+            </if>
+            <if test="birthday!= null">
+               AND birthday = #{birthday}
+            </if>
+            <if test="profession!= null">
+               AND profession = #{profession}
+            </if>
+            <if test="father!= null">
+               AND father = #{father}
+            </if>
+            <if test="mother!= null">
+               AND mother = #{mother}
+            </if>
+            <if test="phoneNumber!= null">
+               AND phoneNumber = #{phoneNumber}
+            </if>
+            <if test="spouse!= null">
+               AND spouse = #{spouse}
+            </if>
+            <if test="homeaddress!= null">
+               AND homeaddress = #{homeaddress}
+            </if>
+            <if test="deeds!= null">
+               AND deeds = #{deeds}
+            </if>
+            <if test="createon!= null">
+               AND createon = #{createon}
+            </if>
+            <if test="isdelete!= null">
+               AND isdelete = #{isdelete}
+            </if>
+        </where>
+    </select>
+
+</mapper>

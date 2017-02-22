@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mn.pp.dao.LoginSessionDao">
+
+    <!-- ============================= INSERT ============================= -->
+    <insert id="save" useGeneratedKeys="true" keyProperty="sessionid">
+        INSERT INTO login_session( sessionid,userid,token,platform)
+        VALUES ( #{sessionid},#{userid},#{token},#{platform})
+    </insert>
+
+
+    <!-- batch insert for mysql -->
+    <insert id="saveBatch">
+        INSERT INTO login_session( sessionid,userid,token,platform)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.sessionid},#{item.userid},#{item.token},#{item.platform} )
+        </foreach>
+    </insert>
+
+
+    <!-- ============================= UPDATE ============================= -->
+    <update id="update">
+        UPDATE login_session
+        <set>
+            userid=#{userid},
+            token=#{token},
+            platform=#{platform},
+        </set>
+        WHERE sessionid=#{sessionid}
+    </update>
+
+    <update id="updateIgnoreNull">
+        UPDATE login_session
+        <set>
+            <if test="userid!= null">userid=#{userid},</if>
+            <if test="token!= null">token=#{token},</if>
+            <if test="platform!= null">platform=#{platform},</if>
+        </set>
+        WHERE sessionid=#{sessionid}
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE login_session
+            <set>
+                userid=#{item.userid},
+                token=#{item.token},
+                platform=#{item.platform},
+            </set>
+            WHERE sessionid=#{item.sessionid}
+        </foreach>
+    </update>
+
+
+    <!-- ============================= DELETE ============================= -->
+    <delete id="delete">
+        DELETE FROM login_session
+        WHERE sessionid=#{sessionid} 
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM login_session
+        WHERE
+        <foreach collection="list" item="item" index="index" open="(" separator="OR" close=")">
+            sessionid=#{item.sessionid}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPK">
+        DELETE FROM login_session
+        WHERE sessionid=#{sessionid} 
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM login_session
+    </delete>
+
+
+    <!-- ============================= SELECT ============================= -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM login_session
+    </select>
+
+    <select id="findByPK" resultType="com.mn.pp.pojo.LoginSession">
+        SELECT * FROM login_session
+        WHERE sessionid=#{sessionid} 
+    </select>
+
+    <select id="find" resultType="com.mn.pp.pojo.LoginSession">
+        SELECT sessionid,userid,token,platform
+        FROM login_session
+        <where>
+            <if test="sessionid!= null">
+                AND sessionid = #{sessionid}
+            </if>
+            <if test="userid!= null">
+                AND userid = #{userid}
+            </if>
+            <if test="token!= null">
+                AND token = #{token}
+            </if>
+            <if test="platform!= null">
+                AND platform = #{platform}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByUserId" resultType="com.mn.pp.pojo.LoginSession">
+        SELECT  sessionid,token
+         FROM login_session
+         WHERE userId=#{userId} limit 1;
+    </select>
+
+</mapper>

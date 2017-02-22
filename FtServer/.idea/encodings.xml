@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dto" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/EncryptedUser.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/FamilyMember.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/Friends.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/Genealogy.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/LoginSession.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/ManagementRole.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/PrivilegeUserRole.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Dto/src/main/java/com/mn/pp/pojo/User.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/EncryptedUserMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/FamilyMemberMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/FriendsMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/GenealogyMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/LoginsessionMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/ManagementRoleMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/PrivilegeUserRoleMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/FtWebService/src/main/resources/mapper/UserMapper.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Model/src/main/java/com/mn/pp/BasicDao.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Model/src/main/java/com/mn/pp/dao" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

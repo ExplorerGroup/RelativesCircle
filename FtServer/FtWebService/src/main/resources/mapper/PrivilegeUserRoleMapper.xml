@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mn.pp.dao.PrivilegeUserRoleDao">
+
+    <!-- ============================= INSERT ============================= -->
+    <insert id="save" useGeneratedKeys="true" keyProperty="uid" >
+        INSERT INTO privilege_user_role( uid,roleid,userid,createon,updateon,isdelete )
+        VALUES ( #{uid},#{roleid},#{userid},#{createon},#{updateon},#{isdelete})
+    </insert>
+
+
+    <!-- batch insert for mysql -->
+    <insert id="saveBatch">
+        INSERT INTO privilege_user_role( uid,roleid,userid,createon,updateon,isdelete )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.uid},#{item.roleid},#{item.userid},#{item.createon},#{item.updateon},#{item.isdelete} )
+        </foreach>
+    </insert>
+
+
+    <!-- batch insert for oracle -->
+    <!--
+    <insert id="saveBatch">
+        INSERT INTO privilege_user_role( uid,roleid,userid,createon,updateon,isdelete )
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT #{item.uid},#{item.roleid},#{item.userid},#{item.createon},#{item.updateon},#{item.isdelete} 
+              FROM DUAL 
+        </foreach>
+    </insert>
+
+    -->
+
+    <!-- ============================= UPDATE ============================= -->
+    <update id="update">
+        UPDATE privilege_user_role
+        <set>
+            roleid=#{roleid},
+            userid=#{userid},
+            createon=#{createon},
+            updateon=#{updateon},
+            isdelete=#{isdelete},
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateIgnoreNull">
+        UPDATE privilege_user_role
+        <set>
+            <if test="roleid!= null">roleid=#{roleid},</if>
+            <if test="userid!= null">userid=#{userid},</if>
+            <if test="createon!= null">createon=#{createon},</if>
+            <if test="updateon!= null">updateon=#{updateon},</if>
+            <if test="isdelete!= null">isdelete=#{isdelete},</if>
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index"  separator=";">
+            UPDATE privilege_user_role
+            <set>
+                roleid=#{item.roleid},
+                userid=#{item.userid},
+                createon=#{item.createon},
+                updateon=#{item.updateon},
+                isdelete=#{item.isdelete},
+            </set>
+            WHERE uid=#{item.uid} 
+        </foreach>
+    </update>
+
+
+    <!-- ============================= DELETE ============================= -->
+    <delete id="delete">
+        DELETE FROM privilege_user_role
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM privilege_user_role
+        WHERE
+        <foreach collection="list" item="item" index="index" open="(" separator="OR" close=")">
+            uid=#{item.uid} 
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPK">
+        DELETE FROM privilege_user_role
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM privilege_user_role
+    </delete>
+
+
+    <!-- ============================= SELECT ============================= -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM privilege_user_role
+    </select>
+
+    <select id="findByPK" resultType="com.mn.pp.pojo.PrivilegeUserRole">
+        SELECT * FROM privilege_user_role
+        WHERE uid=#{uid} 
+    </select>
+
+    <select id="find" resultType="com.mn.pp.pojo.PrivilegeUserRole">
+        SELECT uid,roleid,userid,createon,updateon,isdelete
+         FROM privilege_user_role
+        <where>
+            <if test="uid!= null">
+               AND uid = #{uid}
+            </if>
+            <if test="roleid!= null">
+               AND roleid = #{roleid}
+            </if>
+            <if test="userid!= null">
+               AND userid = #{userid}
+            </if>
+            <if test="createon!= null">
+               AND createon = #{createon}
+            </if>
+            <if test="updateon!= null">
+               AND updateon = #{updateon}
+            </if>
+            <if test="isdelete!= null">
+               AND isdelete = #{isdelete}
+            </if>
+        </where>
+    </select>
+
+</mapper>

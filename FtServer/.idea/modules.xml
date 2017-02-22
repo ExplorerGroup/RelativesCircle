@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Core/Core.iml" filepath="$PROJECT_DIR$/Core/Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dto/Dto.iml" filepath="$PROJECT_DIR$/Dto/Dto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FtServer.iml" filepath="$PROJECT_DIR$/FtServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FtWebService/FtWebService.iml" filepath="$PROJECT_DIR$/FtWebService/FtWebService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Model/Model.iml" filepath="$PROJECT_DIR$/Model/Model.iml" />
+    </modules>
+  </component>
+</project>

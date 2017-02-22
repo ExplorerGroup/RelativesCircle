@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mn.pp.dao.FriendsDao">
+
+    <!-- ============================= INSERT ============================= -->
+    <insert id="save" useGeneratedKeys="true" keyProperty="uid" >
+        INSERT INTO friends( uid,mid,fid,createon,isdelete,updateon )
+        VALUES ( #{uid},#{mid},#{fid},#{createon},#{isdelete},#{updateon})
+    </insert>
+
+
+    <!-- batch insert for mysql -->
+    <insert id="saveBatch">
+        INSERT INTO friends( uid,mid,fid,createon,isdelete,updateon )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.uid},#{item.mid},#{item.fid},#{item.createon},#{item.isdelete},#{item.updateon} )
+        </foreach>
+    </insert>
+
+
+    <!--batch insert for oracle -->
+    <!--
+    <insert id="saveBatch">
+        INSERT INTO friends( uid,mid,fid,createon,isdelete,updateon )
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT #{item.uid},#{item.mid},#{item.fid},#{item.createon},#{item.isdelete},#{item.updateon} 
+              FROM DUAL 
+        </foreach>
+    </insert>
+
+    -->
+
+    <!-- ============================= UPDATE ============================= -->
+    <update id="update">
+        UPDATE friends
+        <set>
+            mid=#{mid},
+            fid=#{fid},
+            createon=#{createon},
+            isdelete=#{isdelete},
+            updateon=#{updateon},
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateIgnoreNull">
+        UPDATE friends
+        <set>
+            <if test="mid!= null">mid=#{mid},</if>
+            <if test="fid!= null">fid=#{fid},</if>
+            <if test="createon!= null">createon=#{createon},</if>
+            <if test="isdelete!= null">isdelete=#{isdelete},</if>
+            <if test="updateon!= null">updateon=#{updateon},</if>
+        </set>
+        WHERE uid=#{uid} 
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index"  separator=";">
+            UPDATE friends
+            <set>
+                mid=#{item.mid},
+                fid=#{item.fid},
+                createon=#{item.createon},
+                isdelete=#{item.isdelete},
+                updateon=#{item.updateon},
+            </set>
+            WHERE uid=#{item.uid} 
+        </foreach>
+    </update>
+
+
+    <!-- ============================= DELETE ============================= -->
+    <delete id="delete">
+        DELETE FROM friends
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM friends
+        WHERE
+        <foreach collection="list" item="item" index="index" open="(" separator="OR" close=")">
+            uid=#{item.uid} 
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPK">
+        DELETE FROM friends
+        WHERE uid=#{uid} 
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM friends
+    </delete>
+
+
+    <!-- ============================= SELECT ============================= -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM friends
+    </select>
+
+    <select id="findByPK" resultType="com.mn.pp.pojo.Friends">
+        SELECT * FROM friends
+        WHERE uid=#{uid} 
+    </select>
+
+    <select id="find" resultType="com.mn.pp.pojo.Friends">
+        SELECT uid,mid,fid,createon,isdelete,updateon
+         FROM friends
+        <where>
+            <if test="uid!= null">
+               AND uid = #{uid}
+            </if>
+            <if test="mid!= null">
+               AND mid = #{mid}
+            </if>
+            <if test="fid!= null">
+               AND fid = #{fid}
+            </if>
+            <if test="createon!= null">
+               AND createon = #{createon}
+            </if>
+            <if test="isdelete!= null">
+               AND isdelete = #{isdelete}
+            </if>
+            <if test="updateon!= null">
+               AND updateon = #{updateon}
+            </if>
+        </where>
+    </select>
+
+</mapper>
