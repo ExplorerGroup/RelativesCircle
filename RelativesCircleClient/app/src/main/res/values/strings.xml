@@ -4,4 +4,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
+    <string name="name">姓名</string>
+    <string name="relationship">亲属关系</string>
 </resources>

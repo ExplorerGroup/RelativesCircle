@@ -8,4 +8,17 @@
     <dimen name="text_small">13dp</dimen>
     <dimen name="text_normal">16dp</dimen>
     <dimen name="text_larger">18dp</dimen>
+
+    <dimen name="member_card_width">64dp</dimen>
+    <dimen name="member_card_height">108dp</dimen>
+    <dimen name="member_card_corner_radius">2dp</dimen>
+    <dimen name="member_card_photo_width">64dp</dimen>
+    <dimen name="member_card_photo_height">64dp</dimen>
+    <dimen name="member_card_name_text_size">16dp</dimen>
+    <dimen name="member_card_relationship_text_size">12dp</dimen>
+    <dimen name="member_card_name_margin_top">68dp</dimen>
+    <dimen name="member_card_relationship_margin_top">92dp</dimen>
+
+    <dimen name="tree_layout_horizontal_gap">32dp</dimen>
+    <dimen name="tree_layout_vertical_gap">40dp</dimen>
 </resources>

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.android.relativescircle.R;
 import com.android.relativescircle.base.BaseActivity;
+import com.android.relativescircle.utils.MemberListManager;
 
 import butterknife.ButterKnife;
 
@@ -20,6 +21,8 @@ public class LoginActivity extends BaseActivity {
         fragmentTransaction.add(R.id.fm_login,loginFragment);
         fragmentTransaction.commitAllowingStateLoss();
         new LoginPresenter(loginFragment);
+
+        MemberListManager mlm = MemberListManager.getInstance();
     }
 
 

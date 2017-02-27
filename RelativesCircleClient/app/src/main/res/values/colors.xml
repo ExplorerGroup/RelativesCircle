@@ -12,4 +12,6 @@
 
     <color name="line_color">#b1afaf</color>
     <color name="white">#ffffff</color>
+
+    <color name="path_color">#000000</color>
 </resources>

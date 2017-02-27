@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.relativescircle.widget.MemberCard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/member_card_width"
+    android:layout_height="@dimen/member_card_height"
+    app:cardCornerRadius="@dimen/member_card_corner_radius">
+
+    <ImageView
+        android:id="@+id/member_photo"
+        android:layout_width="@dimen/member_card_photo_width"
+        android:layout_height="@dimen/member_card_photo_height"
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/member_card_name_margin_top"
+        android:text="@string/name"
+        android:textSize="@dimen/member_card_name_text_size" />
+
+    <TextView
+        android:id="@+id/member_relationship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/member_card_relationship_margin_top"
+        android:text="@string/relationship"
+        android:textSize="@dimen/member_card_relationship_text_size" />
+</com.android.relativescircle.widget.MemberCard>
