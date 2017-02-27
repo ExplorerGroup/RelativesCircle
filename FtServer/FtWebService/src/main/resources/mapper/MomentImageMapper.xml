@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mn.pp.dao.MomentImageDao">
+
+    <!-- ============================= INSERT ============================= -->
+    <insert id="save">
+        INSERT INTO moment_image( uid,mid,largeimage,normalimage,smallimage,description,createon,
+                         updateon,isdelete )
+        VALUES ( #{uid},#{mid},#{largeimage},#{normalimage},#{smallimage},#{description},#{createon},
+                 #{updateon},#{isdelete})
+    </insert>
+
+
+    <!-- batch insert for mysql -->
+    <insert id="saveBatch">
+        INSERT INTO moment_image( uid,mid,largeimage,normalimage,smallimage,description,createon,
+                          updateon,isdelete )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.uid},#{item.mid},#{item.largeimage},#{item.normalimage},#{item.smallimage},#{item.description},#{item.createon},
+              #{item.updateon},#{item.isdelete} )
+        </foreach>
+    </insert>
+
+
+    <!-- batch insert for oracle -->
+    <!--
+    <insert id="saveBatch">
+        INSERT INTO moment_image( uid,mid,largeimage,normalimage,smallimage,description,createon,
+                          updateon,isdelete )
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT #{item.uid},#{item.mid},#{item.largeimage},#{item.normalimage},#{item.smallimage},#{item.description},#{item.createon},
+              #{item.updateon},#{item.isdelete} 
+              FROM DUAL 
+        </foreach>
+    </insert>
+
+    -->
+
+    <!-- ============================= UPDATE ============================= -->
+    <update id="update">
+        UPDATE moment_image
+        <set>
+            uid=#{uid},
+            mid=#{mid},
+            largeimage=#{largeimage},
+            normalimage=#{normalimage},
+            smallimage=#{smallimage},
+            description=#{description},
+            createon=#{createon},
+            updateon=#{updateon},
+            isdelete=#{isdelete},
+        </set>
+        WHERE 
+    </update>
+
+    <update id="updateIgnoreNull">
+        UPDATE moment_image
+        <set>
+            <if test="uid!= null">uid=#{uid},</if>
+            <if test="mid!= null">mid=#{mid},</if>
+            <if test="largeimage!= null">largeimage=#{largeimage},</if>
+            <if test="normalimage!= null">normalimage=#{normalimage},</if>
+            <if test="smallimage!= null">smallimage=#{smallimage},</if>
+            <if test="description!= null">description=#{description},</if>
+            <if test="createon!= null">createon=#{createon},</if>
+            <if test="updateon!= null">updateon=#{updateon},</if>
+            <if test="isdelete!= null">isdelete=#{isdelete},</if>
+        </set>
+        WHERE 
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index"  separator=";">
+            UPDATE moment_image
+            <set>
+                uid=#{item.uid},
+                mid=#{item.mid},
+                largeimage=#{item.largeimage},
+                normalimage=#{item.normalimage},
+                smallimage=#{item.smallimage},
+                description=#{item.description},
+                createon=#{item.createon},
+                updateon=#{item.updateon},
+                isdelete=#{item.isdelete},
+            </set>
+            WHERE 
+        </foreach>
+    </update>
+
+
+    <!-- ============================= DELETE ============================= -->
+    <delete id="delete">
+        DELETE FROM moment_image
+        WHERE 
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM moment_image
+        WHERE
+        <foreach collection="list" item="item" index="index" open="(" separator="OR" close=")">
+            
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPK">
+        DELETE FROM moment_image
+        WHERE 
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM moment_image
+    </delete>
+
+
+    <!-- ============================= SELECT ============================= -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(1) FROM moment_image
+    </select>
+
+    <select id="findByPK" resultType="com.mn.pp.pojo.MomentImage">
+        SELECT * FROM moment_image
+        WHERE 
+    </select>
+
+    <select id="find" resultType="com.mn.pp.pojo.MomentImage">
+        SELECT uid,mid,largeimage,normalimage,smallimage,description,createon,updateon
+               ,isdelete
+         FROM moment_image
+        <where>
+            <if test="uid!= null">
+               AND uid = #{uid}
+            </if>
+            <if test="mid!= null">
+               AND mid = #{mid}
+            </if>
+            <if test="largeimage!= null">
+               AND largeimage = #{largeimage}
+            </if>
+            <if test="normalimage!= null">
+               AND normalimage = #{normalimage}
+            </if>
+            <if test="smallimage!= null">
+               AND smallimage = #{smallimage}
+            </if>
+            <if test="description!= null">
+               AND description = #{description}
+            </if>
+            <if test="createon!= null">
+               AND createon = #{createon}
+            </if>
+            <if test="updateon!= null">
+               AND updateon = #{updateon}
+            </if>
+            <if test="isdelete!= null">
+               AND isdelete = #{isdelete}
+            </if>
+        </where>
+    </select>
+
+</mapper>

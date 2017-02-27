@@ -135,7 +135,7 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
             }
             request.getSession().getServletContext().getRealPath("");
             //SysConfig._headPortraitPath
-            File folder = new File(request.getSession().getServletContext() + "/" + "FamilyMember/" + fmId);
+            File folder = new File(request.getSession().getServletContext().getRealPath("/") + "familyMember\\/" + fmId);
             if (!folder.exists()) {
                 folder.mkdir();
 
@@ -144,8 +144,7 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
             //上传
             try {
                 file.transferTo(new File(path));
-                String url = "Http://" + request.getLocalAddr() + "/" + request.getServletPath() +
-                        ":" + request.getLocalPort() +
+                String url = "Http://" + request.getServerName() + ":" + request.getLocalPort() + request.getContextPath() +
                         "/" + "familyMemberRestful/headPortrait?"
                         + "fmId=" + fmId + "&fileName=" + file.getOriginalFilename();
 

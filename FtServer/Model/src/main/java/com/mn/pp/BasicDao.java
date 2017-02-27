@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * mybatis DAO基类
  * <p/>
- * Created by HuQingmiao on 2015-5-29.
+ * Created by mn on 2015-5-29.
  */
 public interface BasicDao {
 

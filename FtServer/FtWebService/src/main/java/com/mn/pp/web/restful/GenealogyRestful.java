@@ -43,8 +43,8 @@ public final class GenealogyRestful {
     @RequestMapping(value = "/createFamilyMember", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.POST)
     @ResponseBody
     public String createFamilyMember(
-            @ApiParam(value = "登录时得到的sessionId",required = true)@RequestParam String sessionId,
-            @ApiParam(value = "家庭成员json字符串,所有字段都不能為空",required = true,example = "{\n" +
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭成员json字符串,所有字段都不能為空", required = true, example = "{\n" +
                     "    \"name\": null,\n" +
                     "    \"headurl\": null,\n" +
                     "    \"gendar\": null,\n" +
@@ -59,7 +59,7 @@ public final class GenealogyRestful {
                     "    \"homeaddress\": null,\n" +
                     "    \"deeds\": null,\n" +
                     "    \"level\": 0\n" +
-                    "}")@RequestParam String familyMemberJson) {
+                    "}") @RequestParam String familyMemberJson) {
         if (StringUtils.isNullorWhiteSpace(familyMemberJson, sessionId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }
@@ -78,10 +78,10 @@ public final class GenealogyRestful {
     @RequestMapping(value = "/updateFamilyMember", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.POST)
     @ResponseBody
     public String updateFamilyMember(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId,
-            @ApiParam(value = "家庭成员id",required = true) @RequestParam String fmId,
-            @ApiParam(value = "字段名",required = true,example = "age") @RequestParam String fieldName,
-            @ApiParam(value = "字段名",required = true,example = "20这个就是上面age设的值") @RequestParam Object fieldValue) {
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭成员id", required = true) @RequestParam String fmId,
+            @ApiParam(value = "字段名", required = true, example = "age") @RequestParam String fieldName,
+            @ApiParam(value = "字段名", required = true, example = "20这个就是上面age设的值") @RequestParam Object fieldValue) {
         if (StringUtils.isNullorWhiteSpace(sessionId, fmId, fieldName)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }
@@ -92,8 +92,8 @@ public final class GenealogyRestful {
     @RequestMapping(value = "/deleteFamilyMember", produces = {"application/json;charset=UTF-8"}, method = RequestMethod.POST)
     @ResponseBody
     public String deleteFamilyMember(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId,
-            @ApiParam(value = "家庭成员id",required = true) @RequestParam String fmId) {
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭成员id", required = true) @RequestParam String fmId) {
         if (StringUtils.isNullorWhiteSpace(sessionId, fmId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }
@@ -104,7 +104,7 @@ public final class GenealogyRestful {
     @RequestMapping(value = "/AllFamilyMember", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.GET)
     @ResponseBody
     public String AllFamilyMember(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId) {
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId) {
 
         if (StringUtils.isNullorWhiteSpace(sessionId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
@@ -113,11 +113,11 @@ public final class GenealogyRestful {
     }
 
     @ApiOperation(value = "上传家庭成员图像头像", notes = "上传家庭成员图像，请将图像文件一起带上来，支持所有的图片格式", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/uploadPortrait" ,produces = MediaType.IMAGE_GIF_VALUE,method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadPortrait", produces = MediaType.IMAGE_GIF_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public String uploadPortrait(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId,
-            @ApiParam(value = "家庭成员id",required = true) @RequestParam String fmId,
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭成员id", required = true) @RequestParam String fmId,
             HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNullorWhiteSpace(sessionId, fmId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
@@ -134,12 +134,12 @@ public final class GenealogyRestful {
 
     @RequestMapping(value = "/headPortrait", produces = {MediaType.IMAGE_GIF_VALUE}, method = RequestMethod.GET)
     public void headPortrait(HttpServletRequest request, HttpServletResponse response,
-                             @ApiParam(value = "家庭成员id",required = true) @RequestParam    String fmId,
-                             @ApiParam(value = "图片文件名",required = true) @RequestParam    String fileName) {
+                             @ApiParam(value = "家庭成员id", required = true) @RequestParam String fmId,
+                             @ApiParam(value = "图片文件名", required = true) @RequestParam String fileName) {
         if (StringUtils.isNullorWhiteSpace(fmId, fileName)) {
             return;
         }
-        String path = request.getServletContext() + "/FamilyMember/" + fmId + "/" + fileName;
+        String path = request.getSession().getServletContext().getRealPath("/") + "/familyMember/" + fmId + "/" + fileName;
         FileInputStream fis = null;
         response.setContentType(MediaType.IMAGE_GIF_VALUE);
         try {
@@ -163,11 +163,11 @@ public final class GenealogyRestful {
     }
 
     @ApiOperation(value = "创建家庭树", notes = "创建家庭树", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/createGenealogy" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method = RequestMethod.POST)
+    @RequestMapping(value = "/createGenealogy", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public String createGenealogy(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId,
-            @ApiParam(value = "家庭树显示名称",required = true) @RequestParam String showName,
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭树显示名称", required = true) @RequestParam String showName,
             HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNullorWhiteSpace(sessionId, showName)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
@@ -177,11 +177,11 @@ public final class GenealogyRestful {
 
 
     @ApiOperation(value = "获取家庭树下面所有的家庭成员", notes = "获取家庭树下面所有的家庭成员", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/gFamilyMembers" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method = RequestMethod.GET)
+    @RequestMapping(value = "/gFamilyMembers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public String gFamilyMembers(
-            @ApiParam(value = "登录时得到的sessionId",required = true) @RequestParam String sessionId,
-            @ApiParam(value = "家庭树Id",required = true) @RequestParam String gId) {
+            @ApiParam(value = "登录时得到的sessionId", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "家庭树Id", required = true) @RequestParam String gId) {
 
         if (StringUtils.isNullorWhiteSpace(sessionId, gId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;

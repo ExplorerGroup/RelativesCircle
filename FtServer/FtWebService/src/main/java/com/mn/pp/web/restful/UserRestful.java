@@ -39,11 +39,11 @@ public final class UserRestful {
     @ResponseBody
     public String login(
             @ApiParam(value = "加密用户名", required = true) @RequestParam String encryptName,
-            @ApiParam(value = "加密密码", required = true)  @RequestParam String encryptPwd,
-            @ApiParam(value = "平台信息（Android|IOS)", required = true) @RequestParam  String platform,
-            @ApiParam(value = "设备唯一标示", required = true)  @RequestParam String token,
-            @ApiParam(value = "用户名", required = true)  @RequestParam String userName,
-            @ApiParam(value = "用户类型", required = true)  @RequestParam String userType) {
+            @ApiParam(value = "加密密码", required = true) @RequestParam String encryptPwd,
+            @ApiParam(value = "平台信息（Android|IOS)", required = true) @RequestParam String platform,
+            @ApiParam(value = "设备唯一标示", required = true) @RequestParam String token,
+            @ApiParam(value = "用户名", required = true) @RequestParam String userName,
+            @ApiParam(value = "用户类型", required = true) @RequestParam String userType) {
         if (StringUtils.isNullorWhiteSpace(encryptName, encryptPwd, platform, token, userName, userType)) {//空字符串返回参数错误的模板
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }
@@ -78,7 +78,7 @@ public final class UserRestful {
     @RequestMapping(value = "/uploadUserPortrait")
     @ResponseBody
     public String uploadUserPortrait(
-            @ApiParam(value = "会话id", required = true)  @RequestParam String sessionId,
+            @ApiParam(value = "会话id", required = true) @RequestParam String sessionId,
             HttpServletRequest request,
             HttpServletResponse response) {
         if (StringUtils.isNullorWhiteSpace(sessionId)) {
@@ -88,16 +88,15 @@ public final class UserRestful {
     }
 
 
-
     @ApiOperation(value = "获取用户头像", notes = "获取用户头像", httpMethod = "GET", produces = MediaType.IMAGE_GIF_VALUE)
     @RequestMapping(value = "/userHeadPortrait", produces = {MediaType.IMAGE_GIF_VALUE}, method = RequestMethod.GET)
     public void userHeadPortrait(HttpServletRequest request, HttpServletResponse response,
-                             @ApiParam(value = "用户id", required = true)  @RequestParam String uid,
-                             @ApiParam(value = "文件名", required = true)  @RequestParam String fileName) {
-        if (StringUtils.isNullorWhiteSpace(uid, fileName)) {
+                                 @ApiParam(value = "用户id", required = true) @RequestParam String userId,
+                                 @ApiParam(value = "文件名", required = true) @RequestParam String fileName) {
+        if (StringUtils.isNullorWhiteSpace(userId, fileName)) {
             return;
         }
-        String path = request.getServletContext() + "/userId/" + uid + "/" + fileName;
+        String path = request.getSession().getServletContext().getRealPath("/") + "user\\/"+userId + "\\/" + fileName;
         FileInputStream fis = null;
         response.setContentType(MediaType.IMAGE_GIF_VALUE);
         try {
@@ -109,6 +108,7 @@ public final class UserRestful {
             out.write(b);
             out.flush();
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (fis != null) {
                 try {
@@ -120,12 +120,12 @@ public final class UserRestful {
     }
 
     @ApiOperation(value = "修改個人信息", notes = "修改個人信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/updateUserDetail",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUserDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public String updateUserDetail(
-            @ApiParam(value = "会话id", required = true)  @RequestParam String sessionId,
-            @ApiParam(value = "字段名称", required = true/*,example = "age"*/)  @RequestParam String fieldName,
-            @ApiParam(value = "字段值", required = true)  @RequestParam Object fieldValue) {
+            @ApiParam(value = "会话id", required = true) @RequestParam String sessionId,
+            @ApiParam(value = "字段名称", required = true/*,example = "age"*/) @RequestParam String fieldName,
+            @ApiParam(value = "字段值", required = true) @RequestParam Object fieldValue) {
         if (StringUtils.isNullorWhiteSpace(sessionId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }
@@ -134,9 +134,9 @@ public final class UserRestful {
 
 
     @ApiOperation(value = "获取用户信息", notes = "获取用户信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/userDetail",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method = RequestMethod.GET)
+    @RequestMapping(value = "/userDetail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public String userDetail(@ApiParam(value = "会话id", required = true)  @RequestParam String sessionId){
+    public String userDetail(@ApiParam(value = "会话id", required = true) @RequestParam String sessionId) {
         if (StringUtils.isNullorWhiteSpace(sessionId)) {
             return CommRetTemplate.TEMPLATE_PARAM_ERR;
         }

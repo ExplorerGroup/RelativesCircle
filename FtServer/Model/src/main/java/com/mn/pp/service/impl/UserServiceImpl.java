@@ -114,19 +114,17 @@ public class UserServiceImpl implements IUserService {
             }
             request.getSession().getServletContext().getRealPath("");
             //SysConfig._headPortraitPath
-            File folder = new File(request.getSession().getServletContext() + "/" + "uid/" + user.getUid());
+            File folder = new File(request.getSession().getServletContext().getRealPath("/") + "user\\/"+ user.getUid());
             if (!folder.exists()) {
-                folder.mkdir();
-
+                folder.mkdirs();
             }
-            String path = folder.getAbsolutePath() + "/" + file.getOriginalFilename();
+            String path = folder.getAbsolutePath() + "\\/" + file.getOriginalFilename();
             //上传
             try {
                 file.transferTo(new File(path));
-                String url = "Http://" + request.getLocalAddr() + "/" + request.getServletPath() +
-                        ":" + request.getLocalPort() +
-                        "/" + "userRestful/headPortrait?"
+                String url = "Http://" + request.getServerName() + ":" + request.getLocalPort() + request.getContextPath() + "/userRestful" + "/userHeadPortrait?"
                         + "userId=" + user.getUid() + "&fileName=" + file.getOriginalFilename();
+                user.setHeadurl(url);
                 userDao.update(user);
                 request.setAttribute("fileUrl", path);
                 File[] fileArray = folder.listFiles();
@@ -141,6 +139,7 @@ public class UserServiceImpl implements IUserService {
                 RetTemplate retTemplate = new RetTemplate();
                 retTemplate.setRetCode(CommRetTemplate.RetCode.RETCODE_SUCCESS)
                         .setRetValue("{headUrl:" + url + "}");
+                return retTemplate.toJson();
             } catch (IOException e) {
                 e.printStackTrace();
             }
